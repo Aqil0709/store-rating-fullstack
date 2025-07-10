@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
 
 
 
-// ✅ POST /api/admin/users
+//  POST /api/admin/users
 router.post("/users", authMiddleware, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).send("Access denied");
 
@@ -40,8 +40,6 @@ router.post("/users", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ POST /api/admin/stores
-// ✅ POST /api/admin/stores
 router.post("/stores", authMiddleware, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).send("Access denied");
 
@@ -53,7 +51,7 @@ router.post("/stores", authMiddleware, async (req, res) => {
   }
 
   try {
-    // ✅ Check if owner exists
+    // Check if owner exists
     const [owner] = await db.execute(
       "SELECT id FROM users WHERE id = ? AND role = 'owner'",
       [owner_id]
@@ -63,7 +61,7 @@ router.post("/stores", authMiddleware, async (req, res) => {
       return res.status(400).send("Owner with this ID does not exist or is not a store owner");
     }
 
-    // ✅ Check for duplicate store name for same owner
+    //  Check for duplicate store name for same owner
     const [existing] = await db.execute(
       "SELECT id FROM stores WHERE name = ? AND owner_id = ?",
       [name, owner_id]
@@ -72,13 +70,13 @@ router.post("/stores", authMiddleware, async (req, res) => {
       return res.status(400).send("Store already exists for this owner");
     }
 
-    // ✅ Insert the store
+    //  Insert the store
     const [result] = await db.execute(
       "INSERT INTO stores (name, address, owner_id) VALUES (?, ?, ?)",
       [name, address, owner_id]
     );
 
-    console.log("✅ Store inserted, ID:", result.insertId);
+    console.log(" Store inserted, ID:", result.insertId);
 
     res.send("Store added successfully");
   } catch (err) {
