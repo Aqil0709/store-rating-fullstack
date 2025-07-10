@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 
-// ✅ Auth Middleware
+//  Auth Middleware
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.sendStatus(401);
@@ -15,8 +15,7 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-// ✅ Admin adds a store with owner email lookup
-// ✅ FIXED route
+// Admin adds a store with owner email lookup
 router.post("/stores", authMiddleware, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).send("Access denied");
 
@@ -62,7 +61,7 @@ router.post("/stores", authMiddleware, async (req, res) => {
 
 
 
-// ✅ GET /stores/all (user can browse & rate)
+// GET /stores/all (user can browse & rate)
 router.get("/all", authMiddleware, async (req, res) => {
   try {
     const { name, address, sortBy = "s.name", order = "asc" } = req.query;
@@ -115,7 +114,7 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ GET /stores/owner (dashboard for store owner)
+//GET /stores/owner (dashboard for store owner)
 router.get("/owner", async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
