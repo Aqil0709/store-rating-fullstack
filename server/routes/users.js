@@ -4,7 +4,7 @@ const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-// ✅ Auth Middleware
+// Auth Middleware
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.sendStatus(401);
@@ -16,7 +16,7 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-// ✅ ADMIN DASHBOARD
+// ADMIN DASHBOARD
 router.get("/admin/dashboard", authMiddleware, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).send("Not authorized");
 
@@ -128,7 +128,7 @@ router.get("/admin/dashboard", authMiddleware, async (req, res) => {
 });
   
 
-// ✅ PASSWORD UPDATE
+//PASSWORD UPDATE
 router.put("/update-password", authMiddleware, async (req, res) => {
   const { currentPassword, newPassword } = req.body;
 
@@ -153,7 +153,7 @@ router.put("/update-password", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ OWNER DASHBOARD (Enhanced Sorting)
+// OWNER DASHBOARD (Enhanced Sorting)
 router.get("/owner", authMiddleware, async (req, res) => {
   if (req.user.role !== "owner") return res.status(403).send("Access denied");
 
