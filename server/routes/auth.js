@@ -87,7 +87,7 @@ router.post("/update-password", authMiddleware, async (req, res) => {
   res.send("Password updated");
 });
 
-// route: /api/stores/owner
+
 // route: /api/stores/owner
 router.get("/owner", authMiddleware, async (req, res) => {
   if (req.user.role !== "owner") return res.status(403).send("Access denied");
